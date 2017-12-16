@@ -19,6 +19,8 @@ centos7: 17.09.1.ce-centos7 17.09.0.ce-centos7 17.06.2.ce-centos7 17.03.2.ce-cen
 
 stretch: 17.09.1-stretch 17.09.0-stretch 17.06.2-stretch 17.03.2-stretch
 
+buster: 17.05.0-buster
+
 17.09.1-xenial:
 	$(DOCKER) build --build-arg RUNTIME_VERSION="$(RUNTIME_VERSION)+docker17.09.1-1" \
                         --build-arg DOCKER_VERSION="docker-ce (= 17.09.1~ce-0~ubuntu) | docker-ee (= 17.09.1~ee-0~ubuntu)" \
@@ -146,3 +148,11 @@ stretch: 17.09.1-stretch 17.09.0-stretch 17.06.2-stretch 17.03.2-stretch
                         --build-arg PKG_REV="$(PKG_REV)" \
                         -t nvidia-docker2:$@ -f Dockerfile.stretch .
 	$(DOCKER) run --rm -v $(DIST_DIR)/stretch:/dist:Z nvidia-docker2:$@
+
+17.05.0-buster:
+	$(DOCKER) build --build-arg RUNTIME_VERSION="$(RUNTIME_VERSION)+docker17.05.0-1" \
+                        --build-arg DOCKER_VERSION="docker-engine (= 17.05.0~ce-0~debian-stretch)" \
+                        --build-arg PKG_VERS="$(VERSION)+docker17.05.0-1" \
+                        --build-arg PKG_REV="$(PKG_REV)" \
+                        -t nvidia-docker2:$@ -f Dockerfile.buster .
+	$(DOCKER) run --rm -v $(DIST_DIR)/buster:/dist:Z nvidia-docker2:$@
